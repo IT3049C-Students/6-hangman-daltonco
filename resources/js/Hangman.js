@@ -45,6 +45,12 @@ class Hangman {
     this.didWin = false;
   }
 
+  next(){
+    startWrapper.classList.add(hidden);
+    gameWrapper.classList.remove(hidden);
+    wordHolderText.innerHTML = Hangman.getWordHolderText();
+    guessesText.innerHTML = Hangman.getGuessesText();
+
   /**
    *
    * @param {string} letter the guessed letter.
@@ -154,7 +160,7 @@ class Hangman {
     for(let i = 0; i <= wordLength; i++){
       for(let j = 0; j <= this.guesses.length; i++){
         if(this.word.charAt(i) === this.guesses[j]){
-          placeholderStr.concat(this.word.charAt(i), " ";)
+          placeholderStr.concat(this.word.charAt(i), " ");
         }
         else{
           placeholderStr.concat("_ ");
@@ -176,7 +182,6 @@ class Hangman {
     let guessesText = "Guesses: ";
     guessesText.concat(guessesStr);
     return guessesText;
-    }
   }
 
   /**

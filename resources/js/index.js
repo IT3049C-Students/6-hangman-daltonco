@@ -1,5 +1,5 @@
 // START + DIFFICULTY SELECTION
-const startWrapper = document.getElementById(`startWrapper`);
+const startWrapper = document.getElementById('startWrapper');
 const difficultySelectForm = document.getElementById(`difficultySelect`);
 const difficultySelect = document.getElementById(`difficulty`);
 
@@ -29,7 +29,16 @@ try {
   //       2. show the gameWrapper
   //       3. call the game getWordHolderText and set it to the wordHolderText
   //       4. call the game getGuessessText and set it to the guessesText
-  difficultySelectForm.addEventListener(`submit`, function (event) {});
+  difficultySelectForm.addEventListener('submit', function (event) {
+    let difficultyStr = difficultySelect.options[difficultySelect.selectedIndex].value;
+    Hangman.start(difficultyStr, next);
+
+    //startWrapper.classList.add(hidden);
+    //gameWrapper.classList.remove(hidden);
+    //wordHolderText.innerHTML = Hangman.getWordHolderText();
+    //guessesText.innerHTML = Hangman.getGuessesText();
+    
+  });
 
   // add a submit Event Listener to the guessForm
   //    get the guess input
