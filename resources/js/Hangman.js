@@ -5,7 +5,8 @@ class Hangman {
     }
 
     this.canvas = _canvas;
-    this.ctx = this.canvas.getContext(`2d`);
+    this.ctx = this.canvas.getContext('2d');
+    //this.ctx = this.canvas.getContext(`2d`);
   }
 
   /**
@@ -19,7 +20,7 @@ class Hangman {
    * */
   getRandomWord(difficulty) {
     return fetch(
-      `https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=${difficulty}`
+      'https://hangman-micro-service-bpblrjerwh.now.sh?difficulty=${difficulty}'
     )
       .then((r) => r.json())
       .then((r) => r.word);
@@ -30,7 +31,7 @@ class Hangman {
    * @param {string} difficulty a difficulty string to be passed to the getRandomWord Function
    * @param {function} next callback function to be called after a word is reveived from the API.
    */
-  start(difficulty, next) {
+  async start(difficulty, next) {
     // get word and set it to the class's this.word
     this.word = this.getRandomWord(difficulty);
     // clear canvas
@@ -43,19 +44,14 @@ class Hangman {
     this.isOver = false;
     // reset this.didWin to false
     this.didWin = false;
+    next();
   }
-
-  next(){
-    startWrapper.classList.add(hidden);
-    gameWrapper.classList.remove(hidden);
-    wordHolderText.innerHTML = Hangman.getWordHolderText();
-    guessesText.innerHTML = Hangman.getGuessesText();
 
   /**
    *
    * @param {string} letter the guessed letter.
    */
-  guess(letter) {
+  guess(letter){
     // Check if nothing was provided and throw an error if so
     if(letter === ""){
       throw 'Guess was empty!';
