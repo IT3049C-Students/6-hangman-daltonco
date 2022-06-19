@@ -1,5 +1,5 @@
 // START + DIFFICULTY SELECTION
-const startWrapper = document.getElementById(`startWrapper`);
+const startWrapper = document.getElementById('startWrapper');
 const difficultySelectForm = document.getElementById(`difficultySelect`);
 const difficultySelect = document.getElementById(`difficulty`);
 
@@ -21,6 +21,7 @@ let canvas = document.getElementById(`hangmanCanvas`);
 // The following Try-Catch Block will catch the errors thrown
 try {
   // Instantiate a game Object using the Hangman class.
+  game = new Hangman(canvas);
 
   // add a submit Event Listener for the to the difficultySelectionForm
   //    get the difficulty input
@@ -29,7 +30,19 @@ try {
   //       2. show the gameWrapper
   //       3. call the game getWordHolderText and set it to the wordHolderText
   //       4. call the game getGuessessText and set it to the guessesText
-  difficultySelectForm.addEventListener(`submit`, function (event) {});
+  difficultySelectForm.addEventListener('submit', function (event) {
+    let difficultyStr = difficultySelect.options[difficultySelect.selectedIndex].value;
+    game.start(difficultyStr, function next(){
+      startCallback();
+    });
+  });
+
+  function startCallback(){
+    startWrapper.classList.add('hidden');
+    gameWrapper.classList.remove('hidden');
+    wordHolderText.innerHTML = game.getWordHolderText();
+    guessesText.innerHTML = game.getGuessesText();
+  };
 
   // add a submit Event Listener to the guessForm
   //    get the guess input
@@ -44,7 +57,25 @@ try {
   //      2. disable the guessButton
   //      3. show the resetGame button
   // if the game is won or lost, show an alert.
-  guessForm.addEventListener(`submit`, function (e) {});
+  guessForm.addEventListener(`submit`, function (e) {
+    let guessVal = guessInput.value;
+    game.guess(guessTxt);
+    wordHolderText.innerHTML = game.getWordHolderText();
+    guessesText.innerHTML = game.getGuessesText();
+    guessInput.value = "";
+
+    if(game.isOver){
+      guessInput.disabled = true;
+      guessButton.disabled = true;
+      resetGame.classList.remove('hidden');
+      if(game.didWin){
+        alert("You win! :D");
+      }
+      else{
+        alert("You lose! :D");
+      }
+    }
+  });
 
   // add a click Event Listener to the resetGame button
   //    show the startWrapper
